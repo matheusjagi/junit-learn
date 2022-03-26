@@ -4,6 +4,7 @@ import br.com.jagi.junitlearn.service.UserService;
 import br.com.jagi.junitlearn.service.dto.UserDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,15 +16,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/users")
-@RequiredArgsConstructor
 @Slf4j
 public class UserResource {
 
-    private final UserService userService;
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/{userId}")
     public ResponseEntity<UserDTO> findById(@PathVariable("userId") Integer userId) {
@@ -37,7 +39,8 @@ public class UserResource {
 
     @PostMapping
     public ResponseEntity<UserDTO> create(@RequestBody UserDTO userDTO) {
-        return new ResponseEntity<>(userService.create(userDTO), HttpStatus.CREATED);
+        UserDTO user = userService.create(userDTO);
+        return ResponseEntity.created(URI.create("/api/users/" + user.getId())).body(user);
     }
 
     @PutMapping

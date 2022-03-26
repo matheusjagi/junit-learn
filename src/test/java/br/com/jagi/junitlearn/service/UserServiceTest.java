@@ -40,6 +40,10 @@ class UserServiceTest {
     public static final String EMAIL_CADASTRADO       = "E-mail já cadastrado";
     public static final String USUARIO_NAO_ENCONTRADO = "Usuario não encontrado";
 
+    private User user;
+    private UserDTO userDTO;
+    private Optional<User> optionalUser;
+
     @InjectMocks
     private UserService userService;
 
@@ -48,12 +52,6 @@ class UserServiceTest {
 
     @Mock
     private ModelMapper mapper;
-
-    private User user;
-
-    private UserDTO userDTO;
-
-    private Optional<User> optionalUser;
 
     @BeforeEach
     void setUp() {
@@ -134,7 +132,7 @@ class UserServiceTest {
     void whenUpdateThenReturnSuccess() {
         when(userRepository.save(any())).thenReturn(user);
 
-        UserDTO response = userService.create(userDTO);
+        UserDTO response = userService.update(userDTO);
 
         assertNotNull(response);
         assertEquals(UserDTO.class, response.getClass());
@@ -145,15 +143,15 @@ class UserServiceTest {
     }
 
     @Test
-    void whenUpdateThenReturnAnDataIntegrityViolationException() {
+    void whenUpdateThenReturnBadRequestException() {
         when(userRepository.findByEmail(anyString())).thenReturn(optionalUser);
 
         try {
-            optionalUser.ifPresent(user -> user.setId(2));
-            userService.create(userDTO);
+            userDTO.setId(null);
+            userService.update(userDTO);
         } catch (ResponseStatusException exception) {
             assertEquals(ResponseStatusException.class, exception.getClass());
-            assertEquals(EMAIL_CADASTRADO, exception.getReason());
+            assertEquals("Usuário não encontrado para atualização", exception.getReason());
         }
     }
 
