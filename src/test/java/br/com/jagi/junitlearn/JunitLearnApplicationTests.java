@@ -8,6 +8,7 @@ class JunitLearnApplicationTests {
 
     @Test
     void contextLoads() {
+        JunitLearnApplication.main(new String[] {});
     }
 
 }
