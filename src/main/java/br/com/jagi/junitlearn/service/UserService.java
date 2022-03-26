@@ -3,7 +3,6 @@ package br.com.jagi.junitlearn.service;
 import br.com.jagi.junitlearn.domain.User;
 import br.com.jagi.junitlearn.repositories.UserRepository;
 import br.com.jagi.junitlearn.service.dto.UserDTO;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;

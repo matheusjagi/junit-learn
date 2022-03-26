@@ -32,13 +32,13 @@ import static org.mockito.Mockito.when;
 @SpringBootTest
 class UserServiceTest {
 
-    public static final Integer ID      = 1;
-    public static final String NAME     = "Jagi";
-    public static final String EMAIL    = "jagi@gmail.com";
-    public static final String PASSWORD = "123";
+    public static final Integer ID                    = 1;
+    public static final String NAME                   = "Jagi";
+    public static final String EMAIL                  = "jagi@gmail.com";
+    public static final String PASSWORD               = "123";
+    public static final Integer INDEX_FIRST           = 0;
+    public static final String EMAIL_CADASTRADO       = "E-mail já cadastrado";
     public static final String USUARIO_NAO_ENCONTRADO = "Usuario não encontrado";
-    public static final int INDEX_FIRST = 0;
-    public static final String EMAIL_CADASTRADO = "E-mail já cadastrado";
 
     @InjectMocks
     private UserService userService;
